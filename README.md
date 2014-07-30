@@ -9,9 +9,9 @@ xss2shell is a piece of software which allows you to get instant php code execut
 
 Some notes:
   1. The current footer.php file that's used by xss2shell is from the twentyfourteen theme.
-      -> While xss2shell can be used with any theme, footer.php will still be replaced with the one included
-  2. When using a custom PHP payload, remove all PHP tags so that it will be evaled correctly
-  3. When entering a theme name, make sure it matches what wordpress uses exactly.
+  2. While xss2shell can be used with any theme, footer.php will still be replaced with the one included
+  3. When using a custom PHP payload, remove all PHP tags so that it will be evaled correctly
+  4. When entering a theme name, make sure it matches what wordpress uses exactly.
 
 Future Goals:
   1. Joomla Implementation
