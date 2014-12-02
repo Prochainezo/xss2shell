@@ -1,8 +1,10 @@
-xss2shell v2
+xss2shell v3
 =========
 
 Changelog:
+
 v3 - Akismet is now used for backdooring WP; Themes are no longer used.
+
 V2 - Added Joomla support
 
 xss2shell is a piece of software which allows you to get instant php code execution on WordPress and Joomla! installations via XSS vulnerabilities. The tool is designed to operate as follows:
