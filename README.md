@@ -1,12 +1,12 @@
 XSS2SHELL v3
 =========
 
-Changelog:
-v3 - Akismet is now used for backdooring WP; Themes are no longer used.
+Changelog:<br />
+v3 - Akismet is now used for backdooring WP; Themes are no longer used.<br />
 V2 - Added Joomla support
 
-Videos:
-Exploiting CVE-2014-9031 with XSS2SHELL (V3): http://youtu.be/hRIuaLQfOhs
+Videos:<br />
+Exploiting CVE-2014-9031 with XSS2SHELL (V3): http://youtu.be/hRIuaLQfOhs<br />
 XSS2SHELL - Video Walkthrough & Introduction (V1): http://youtu.be/-EGUfPgK_lw
 
 XSS2SHELL is a piece of software which allows you to get instant php code execution on WordPress and Joomla! installations via XSS vulnerabilities. The tool is designed to operate as follows:
