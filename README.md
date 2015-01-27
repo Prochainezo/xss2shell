@@ -2,7 +2,7 @@ XSS2SHELL v3
 =========
 
 Changelog:<br />
-v3 - Akismet is now used for backdooring WP; Themes are no longer used.<br />
+v3 - "Hello Dolly" plugin is now used for backdooring WP; Themes are no longer used.<br />
 V2 - Added Joomla support
 
 Videos:<br />
@@ -16,7 +16,7 @@ XSS2SHELL is a piece of software which allows you to get instant php code execut
 3. Payload is triggerd by a WP/Joomla! admin, and the attacker's php is evaled
 
 Some notes:
-  1. The WordPress payload is always saved to "/wp-content/plugins/akismet/index.php"
+  1. The WordPress payload is always saved to "/wp-content/plugins/hello.php"
   2. The Joomla! payload is always saved to "/administrator/templates/isis/pay.php"
 
 Feel free to contribute to this repo by reporting bugs or making productive pull requests.

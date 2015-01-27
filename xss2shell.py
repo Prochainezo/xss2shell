@@ -60,7 +60,7 @@ try:
 	args = parser.parse_args()
 	if args.cms.lower() == 'wordpress':
 		cms = args.cms.lower()
-		print('[+] Payload Location: /wp-content/plugins/akismet/index.php')
+		print('[+] Payload Location: /wp-content/plugins/hello.php')
 	elif args.cms.lower() == 'joomla':
 		cms = args.cms.lower()
 		print('[+] Payload Location: /administrator/templates/isis/pay.php')
