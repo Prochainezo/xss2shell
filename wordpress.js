@@ -8,7 +8,7 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-var page = httpGet("%s/wp-admin/plugin-editor.php?file=hello.php&plugin=hello.php")
+var page = httpGet("%s/wp-admin/plugin-editor.php?file=hello.php&plugin=hello.php");
 
 function httpPost(theUrl, csrftoken)
 {
